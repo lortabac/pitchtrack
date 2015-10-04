@@ -10,19 +10,13 @@ module PitchTrack.Track (
 -- * Reading from a file
     trackFile
   , trackFileN
-  , trackFilePrint
-  , trackFilePrintN
   , trackFileToList
 -- * Reading from stdin
   , trackStdin
   , trackStdinN
-  , trackStdinPrint
-  , trackStdinPrintN
 -- * Reading from a handle
   , trackHandle
   , trackHandleN
-  , trackHandlePrint
-  , trackHandlePrintN
 -- * Reading from a lazy 'LBS.ByteString'
   , trackLBS
   , trackLBSN
@@ -52,17 +46,6 @@ trackFileN :: Int -> FilePath -> (Double -> PitchTrack ()) -> IO ()
 trackFileN sampleNum file f = withFileR file $ \ h->
     trackHandleN sampleNum h f
 
--- | Track a file and print each computed pitch
---
--- > trackFilePrint file = trackFile file $ liftIO . print
-trackFilePrint :: FilePath -> IO ()
-trackFilePrint = trackFilePrintN defaultSampleNum
-
--- | Same as 'trackFilePrint', but takes the number of samples as a first parameter
-trackFilePrintN :: Int -> FilePath -> IO ()
-trackFilePrintN sampleNum file = withFileR file $
-    trackHandlePrintN sampleNum
-
 -- | Same as 'trackFile' but reads from 'System.IO.stdin' instead of a file
 trackStdin :: (Double -> PitchTrack ()) -> IO ()
 trackStdin = trackStdinN defaultSampleNum
@@ -70,15 +53,6 @@ trackStdin = trackStdinN defaultSampleNum
 -- | Same as 'trackStdin', but takes the number of samples as a first parameter
 trackStdinN :: Int -> (Double -> PitchTrack ()) -> IO ()
 trackStdinN sampleNum = trackHandleN sampleNum stdin
-
--- | Same as 'trackFilePrint' but reads from 'System.IO.stdin' instead of a file
-trackStdinPrint :: IO ()
-trackStdinPrint = trackStdinPrintN defaultSampleNum
-
--- | Same as 'trackStdinPrint', but takes the number of samples as a first parameter
-trackStdinPrintN :: Int -> IO ()
-trackStdinPrintN sampleNum = runPitchTrack sampleNum $
-    runEffect $ printPitch $ getSamplesFromHandle sampleNum stdin
 
 -- | Same as 'trackFile' but reads from a handle instead of a file
 trackHandle :: Handle -> (Double -> PitchTrack ()) -> IO ()
@@ -88,15 +62,6 @@ trackHandle = trackHandleN defaultSampleNum
 trackHandleN :: Int -> Handle -> (Double -> PitchTrack ()) -> IO ()
 trackHandleN sampleNum h f = runPitchTrack sampleNum $
     runEffect $ forPitch_ (getSamplesFromHandle sampleNum h) f
-
--- | Same as 'trackFilePrint' but reads from a handle instead of a file
-trackHandlePrint :: Handle -> IO ()
-trackHandlePrint = trackHandlePrintN defaultSampleNum
-
--- | Same as 'trackHandlePrint', but takes the number of samples as a first parameter
-trackHandlePrintN :: Int -> Handle -> IO ()
-trackHandlePrintN sampleNum h = runPitchTrack sampleNum $
-    runEffect $ printPitch $ getSamplesFromHandle sampleNum h
 
 -- | Track a lazy 'LBS.ByteString' and apply a function to each computed pitch
 trackLBS :: LBS.ByteString -> (Double -> PitchTrack ()) -> IO ()
