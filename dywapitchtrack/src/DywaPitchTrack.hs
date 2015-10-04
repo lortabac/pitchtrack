@@ -2,7 +2,7 @@
 Note that because all parameters are hard-coded into the C library,
 you are limited to the following audio configuration:
 
-  * raw (headerless) data
+  * raw (headerless) format
 
   * a sampling rate of 44100Hz,
 

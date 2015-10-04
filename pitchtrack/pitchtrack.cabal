@@ -9,12 +9,15 @@ maintainer: lortabac@gmx.com
 bug-reports: https://github.com/lortabac/pitchtrack/issues
 synopsis: Pitch tracking library
 description:
-    High-level interface to the 'dywapitchtrack' pitch tracking library.
+    Pitch tracking library, based on <http://www.schmittmachine.com/dywapitchtrack.html dywapitchtrack>.
+    .
+    See the "PitchTrack" module for an easy, "ready to use" interface,
+    or "PitchTrack.Pipes" for reusable Pipes-based components.
     .
     Note that because all parameters are hard-coded into the C library,
     you are limited to the following audio configuration:
     .
-    * raw (headerless) data
+    * raw (headerless) format
     .
     * a sampling rate of 44100Hz,
     .
