@@ -9,7 +9,20 @@ maintainer: lortabac@gmx.com
 bug-reports: https://github.com/lortabac/pitchtrack/issues
 synopsis: Pitch tracking library
 description:
-    Pipes-based high level interface to the 'dywapitchtrack' library.
+    High-level interface to the 'dywapitchtrack' pitch tracking library.
+    .
+    Note that because all parameters are hard-coded into the C library,
+    you are limited to the following audio configuration:
+    .
+      * raw (headerless) data
+    .
+      * a sampling rate of 44100Hz,
+    .
+      * a sample size of @sizeof(double)@
+    .
+      * floating-point encoding
+    .
+      * one channel (mono)
 category: Sound
 author: Lorenzo Tabacchini
 tested-with: GHC >=7.10
