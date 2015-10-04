@@ -1,3 +1,17 @@
+{- |
+Note that because all parameters are hard-coded into the C library,
+you are limited to the following audio configuration:
+
+  * raw (headerless) data
+
+  * a sampling rate of 44100Hz,
+
+  * a sample size of @sizeof(double)@
+
+  * floating-point encoding
+
+  * one channel (mono)
+-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module DywaPitchTrack (
     PitchTrack

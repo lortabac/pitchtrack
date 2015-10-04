@@ -89,9 +89,11 @@ trackHandleN :: Int -> Handle -> (Double -> PitchTrack ()) -> IO ()
 trackHandleN sampleNum h f = runPitchTrack sampleNum $
     runEffect $ forPitch_ (getSamplesFromHandle sampleNum h) f
 
+-- | Same as 'trackFilePrint' but reads from a handle instead of a file
 trackHandlePrint :: Handle -> IO ()
 trackHandlePrint = trackHandlePrintN defaultSampleNum
 
+-- | Same as 'trackHandlePrint', but takes the number of samples as a first parameter
 trackHandlePrintN :: Int -> Handle -> IO ()
 trackHandlePrintN sampleNum h = runPitchTrack sampleNum $
     runEffect $ printPitch $ getSamplesFromHandle sampleNum h
