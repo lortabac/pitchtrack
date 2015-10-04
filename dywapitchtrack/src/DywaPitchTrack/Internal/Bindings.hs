@@ -4,7 +4,7 @@ module DywaPitchTrack.Internal.Bindings (
     DywaPitchTrackPtr
   , SamplesPtr
   , castToPtrDouble
-  , wordSize
+  , sampleSize
   , withDywaPitchTrack
   , dywapitchNeededSampleCount
   , dywapitchInitTracking
@@ -24,8 +24,8 @@ type SamplesPtr = Ptr CDouble
 castToPtrDouble :: CString -> Ptr CDouble
 castToPtrDouble = castPtr
 
-wordSize :: Int
-wordSize = sizeOf (undefined :: CDouble)
+sampleSize :: Int
+sampleSize = sizeOf (undefined :: CDouble)
 
 withDywaPitchTrack :: (Ptr DywaPitchTrack -> IO a) -> IO a
 withDywaPitchTrack = allocaBytes (sizeOf (undefined :: CInt) + sizeOf (undefined :: CDouble))

@@ -4,7 +4,7 @@ module DywaPitchTrack (
   , runPitchTrack
   , computePitch
   , neededSampleNum
-  , wordSize
+  , sampleSize
   ) where
 
 import           DywaPitchTrack.Internal.Bindings

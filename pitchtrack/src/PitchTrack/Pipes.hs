@@ -18,7 +18,7 @@ import           System.IO
 
 -- | Stream chunks of a fixed number of samples from a handle
 getSamplesFromHandle :: Int -> Handle -> Producer ByteString PitchTrack ()
-getSamplesFromHandle sampleNum = PB.hGet (sampleNum * wordSize)
+getSamplesFromHandle sampleNum = PB.hGet (sampleNum * sampleSize)
 
 -- | Stream chunks of a fixed number of samples from a lazy 'LBS.ByteString'
 getSamplesFromLBS :: Int -> LBS.ByteString -> Producer ByteString PitchTrack ()
