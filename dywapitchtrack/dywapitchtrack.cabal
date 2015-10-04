@@ -21,8 +21,8 @@ category: Sound
 author: Lorenzo Tabacchini
 tested-with: GHC >=7.10
 extra-source-files:
-    cbits
-    include
+    cbits/dywapitchtrack.c
+    include/dywapitchtrack.h
 
 source-repository head
     type: git
