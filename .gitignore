@@ -1,5 +1,5 @@
 dist/
-src/Test/
+**/src/Test/
 .cabal-sandbox/
 cabal.sandbox.config
 cabal.config
