@@ -20,16 +20,21 @@ newtype PitchTrack a = PitchTrack
     } deriving (Functor, Applicative, Monad, MonadIO)
 
 -- | Run the 'PitchTrack' monad
-runPitchTrack :: Int -- ^ number of samples to be used for each computation
-    -> PitchTrack a
+runPitchTrack :: Int -- ^ Number of samples to be used for each computation
+    -> PitchTrack a -- ^ Computations
     -> IO a
 runPitchTrack sampleNum f = withDywaPitchTrack $ \ptr -> do
     dywapitchInitTracking ptr
     runReaderT (unPitchTrack f) (ptr, sampleNum)
 
--- | Compute the pitch
-computePitch :: ByteString -- ^ samples
-    -> PitchTrack Double -- ^ computed pitch
+-- | Compute the pitch.
+--
+-- The size of the ByteString must be equal to
+-- the number of samples set in 'runPitchTrack' * the size of each sample ('sampleSize').
+--
+-- Note: this pre-condition is __not__ checked!
+computePitch :: ByteString -- ^ Samples
+    -> PitchTrack Double -- ^ Computed pitch
 computePitch rawSample = PitchTrack $ do
     (ptr, sampleNum) <- ask
     liftIO $ B.useAsCString rawSample $ \cString ->
@@ -37,6 +42,7 @@ computePitch rawSample = PitchTrack $ do
         dywapitchComputePitch ptr (castToPtrDouble cString) 0 (fromIntegral sampleNum)
 
 -- | Calculate the number of samples needed, based on the lowest frequency
-neededSampleNum :: Int -> Int
+neededSampleNum :: Int -- ^ Lowest frequency, in Hz
+    -> Int -- ^ Number of samples needed for each computation
 neededSampleNum n = unsafePerformIO $
     fromIntegral <$> dywapitchNeededSampleCount (fromIntegral n)

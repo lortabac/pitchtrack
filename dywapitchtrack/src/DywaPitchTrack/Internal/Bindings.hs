@@ -24,6 +24,7 @@ type SamplesPtr = Ptr CDouble
 castToPtrDouble :: CString -> Ptr CDouble
 castToPtrDouble = castPtr
 
+-- | Sample size
 sampleSize :: Int
 sampleSize = sizeOf (undefined :: CDouble)
 
