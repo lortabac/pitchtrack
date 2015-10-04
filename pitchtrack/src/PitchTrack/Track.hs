@@ -1,5 +1,5 @@
 {- |
-This module provides a high level interface for the most common cases.
+This module provides a high-level interface for the most common cases.
 
 The default number of samples used for each computation is 2048,
 which should be enough if you never go below 65Hz.
