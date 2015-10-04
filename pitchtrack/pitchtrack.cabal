@@ -6,11 +6,17 @@ license: MIT
 license-file: LICENSE
 copyright: (c) 2015 Lorenzo Tabacchini
 maintainer: lortabac@gmx.com
+bug-reports: https://github.com/lortabac/pitchtrack/issues
 synopsis: Pitch tracking library
 description:
-    Pipes-based high level interface to the dywapitchtrack library.
+    Pipes-based high level interface to the 'dywapitchtrack' library.
 category: Sound
 author: Lorenzo Tabacchini
+tested-with: GHC >=7.10
+
+source-repository head
+    type: git
+    location: https://github.com/lortabac/pitchtrack.git
 
 library
     exposed-modules:
