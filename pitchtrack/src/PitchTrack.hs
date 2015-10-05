@@ -1,9 +1,11 @@
 module PitchTrack (
+    PitchTrack
+  , runPitchTrack
 -- * Re-exported modules
-    module PitchTrack.Track
+  , module PitchTrack.Track
 -- * Utilities
   , neededSampleNum
   ) where
 
-import           DywaPitchTrack   (neededSampleNum)
+import           DywaPitchTrack
 import           PitchTrack.Track
