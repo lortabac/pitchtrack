@@ -20,8 +20,6 @@ module PitchTrack.Track (
 -- * Reading from a lazy 'LBS.ByteString'
   , trackLBS
   , trackLBSN
--- * Utilities
-  , neededSampleNum
 -- * Other definitions
   , defaultSampleNum
   ) where
