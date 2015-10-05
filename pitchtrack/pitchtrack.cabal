@@ -12,7 +12,7 @@ description:
     Pitch tracking library, based on <http://www.schmittmachine.com/dywapitchtrack.html dywapitchtrack>.
     .
     See the "PitchTrack" module for an easy, "ready to use" interface,
-    or "PitchTrack.Pipes" for reusable Pipes-based components.
+    or "PitchTrack.Pipes" for Pipes-based components, if you need more flexibility.
     .
     Note that because all parameters are hard-coded into the C library,
     you are limited to the following audio configuration:
