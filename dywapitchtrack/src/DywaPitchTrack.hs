@@ -16,6 +16,7 @@ you are limited to the following audio configuration:
 module DywaPitchTrack (
     PitchTrack
   , runPitchTrack
+  , askSampleNum
   , computePitch
   , neededSampleNum
   , sampleSize
@@ -40,6 +41,10 @@ runPitchTrack :: Int -- ^ Number of samples to be used for each computation
 runPitchTrack sampleNum f = withDywaPitchTrack $ \ptr -> do
     dywapitchInitTracking ptr
     runReaderT (unPitchTrack f) (ptr, sampleNum)
+
+-- | The number of samples used for each computation
+askSampleNum :: PitchTrack Int
+askSampleNum = PitchTrack $ snd <$> ask
 
 -- | Compute the pitch.
 --
