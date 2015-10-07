@@ -59,7 +59,7 @@ trackHandle = trackHandleN defaultSampleNum
 -- | Same as 'trackHandle', but takes the number of samples as a first parameter
 trackHandleN :: Int -> Handle -> (Double -> PitchTrack ()) -> IO ()
 trackHandleN sampleNum h f = runPitchTrack sampleNum $
-    runEffect $ forPitch_ (samplesFromHandle sampleNum h) f
+    runEffect $ forPitch_ (samplesFromHandle h) f
 
 -- | Track a lazy 'LBS.ByteString' and apply a function to each computed pitch
 trackLBS :: LBS.ByteString -> (Double -> PitchTrack ()) -> IO ()
@@ -68,7 +68,7 @@ trackLBS = trackLBSN defaultSampleNum
 -- | Same as 'trackLBS', but takes the number of samples as a first parameter
 trackLBSN :: Int -> LBS.ByteString -> (Double -> PitchTrack ()) -> IO ()
 trackLBSN sampleNum lbs f = runPitchTrack sampleNum $
-    runEffect $ forPitch_ (samplesFromLBS sampleNum lbs) f
+    runEffect $ forPitch_ (samplesFromLBS lbs) f
 
 -- | Track a file and return a list of all the computed pitches
 --
@@ -78,7 +78,7 @@ trackFileToList = trackFileToListN defaultSampleNum
 
 trackFileToListN  :: Int -> FilePath -> IO [Double]
 trackFileToListN sampleNum file = withFileR file $ \h ->
-    runPitchTrack sampleNum $ P.toListM $ forPitch (samplesFromHandle sampleNum h) return
+    runPitchTrack sampleNum $ P.toListM $ forPitch (samplesFromHandle h) return
 
 -- | The default number of samples used for each computation (2048)
 defaultSampleNum :: Int

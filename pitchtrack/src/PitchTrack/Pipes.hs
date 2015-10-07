@@ -17,12 +17,16 @@ import qualified Pipes.Prelude        as P
 import           System.IO
 
 -- | Stream chunks of a fixed number of samples from a handle
-samplesFromHandle :: Int -> Handle -> Producer ByteString PitchTrack ()
-samplesFromHandle sampleNum = PB.hGet (sampleNum * sampleSize)
+samplesFromHandle :: Handle -> Producer ByteString PitchTrack ()
+samplesFromHandle h = do
+    sampleNum <- lift askSampleNum
+    PB.hGet (sampleNum * sampleSize) h
 
 -- | Stream chunks of a fixed number of samples from a lazy 'LBS.ByteString'
-samplesFromLBS :: Int -> LBS.ByteString -> Producer ByteString PitchTrack ()
-samplesFromLBS sampleNum lbs = PB.fromLazy lbs >-> PB.take sampleNum
+samplesFromLBS :: LBS.ByteString -> Producer ByteString PitchTrack ()
+samplesFromLBS lbs = do
+    sampleNum <- lift askSampleNum
+    PB.fromLazy lbs >-> PB.take sampleNum
 
 -- | Apply a function to each pitch
 forPitch :: Producer ByteString PitchTrack () -> (Double -> PitchTrack a) -> Producer a PitchTrack ()
