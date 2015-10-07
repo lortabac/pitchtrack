@@ -1,9 +1,9 @@
 module PitchTrack.Pipes (
     samplesFromHandle
   , samplesFromLBS
+  , getPitch
   , forPitch
   , forPitch_
-  , getPitch
   , printPitch
   ) where
 
@@ -28,6 +28,10 @@ samplesFromLBS lbs = do
     sampleNum <- lift askSampleNum
     PB.fromLazy lbs >-> PB.take sampleNum
 
+-- | Stream computed pitches
+getPitch :: Producer ByteString PitchTrack () -> Producer Double PitchTrack ()
+getPitch samplesProducer = samplesProducer >-> P.mapM computePitch
+
 -- | Apply a function to each pitch
 forPitch :: Producer ByteString PitchTrack () -> (Double -> PitchTrack a) -> Producer a PitchTrack ()
 forPitch samplesProducer f = getPitch samplesProducer >-> P.mapM f
@@ -35,10 +39,6 @@ forPitch samplesProducer f = getPitch samplesProducer >-> P.mapM f
 -- | Consume all pitches, applying a function to each one
 forPitch_ :: Producer ByteString PitchTrack () -> (Double -> PitchTrack ()) -> Effect PitchTrack ()
 forPitch_ samplesProducer f = getPitch samplesProducer >-> P.mapM_ f
-
--- | Stream computed pitches
-getPitch :: Producer ByteString PitchTrack () -> Producer Double PitchTrack ()
-getPitch samplesProducer = samplesProducer >-> P.mapM computePitch
 
 -- | Print all pitches
 printPitch :: Producer ByteString PitchTrack () -> Effect PitchTrack ()
